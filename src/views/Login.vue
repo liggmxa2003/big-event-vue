@@ -1,15 +1,21 @@
 <script setup>
-import {User, Lock} from '@element-plus/icons-vue'
-import {ref} from 'vue'
-//控制注册与登录表单的显示， 默认显示注册
+import { User, Lock } from '@element-plus/icons-vue'
+import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { userRegisterService, userLoginService } from '@/api/user.js'
+import { useRouter } from 'vue-router'
+
+// 控制注册与登录表单的显示，默认显示注册
 const isRegister = ref(false)
-//定义数据模型
+
+// 定义数据模型
 const registerData = ref({
   username: '',
   password: '',
   rePassword: ''
 })
-//检验密码函数
+
+// 检验密码函数
 const checkRePassword = (rule, value, callback) => {
   if (value === '') {
     callback(new Error('请再次输入密码'))
@@ -20,7 +26,7 @@ const checkRePassword = (rule, value, callback) => {
   }
 }
 
-//表单检验
+// 表单检验
 const rules = {
   username: [
     {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -34,30 +40,26 @@ const rules = {
     {validator: checkRePassword, trigger: 'blur'}
   ]
 }
-//调用后台接口完成注册
-import { userRegisterService ,userLoginService } from '@/api/user.js'
-const  register = async () =>{
+
+// 调用后台接口完成注册
+const register = async () => {
   let result = await userRegisterService(registerData.value);
-  if (result.code === 0) {
-    //注册成功
-    alert(result.msg ? result.msg : '注册成功')
-  }else {
-    alert('注册失败')
-  }
+  ElMessage.success(result.msg ? result.msg : '注册成功')
 }
-//复用注册表单数据模型完成登录
-const login = async () =>{
-  //调用接口完成登录
+
+// 复用注册表单数据模型完成登录
+const router = useRouter()
+
+const Login = async () => {
+  // 调用接口完成登录
   let result = await userLoginService(registerData.value);
-  if (result.code === 0) {
-    //登录成功
-    alert(result.msg ? result.msg : '登录成功')
-  }else {
-    alert('登录失败')
-  }
+  ElMessage.success(result.msg ? result.msg : '登录成功')
+  // 跳转主页
+  router.push('/')
 }
-//清空表单数据
-const clearRegisterData = () =>{
+
+// 清空表单数据
+const clearRegisterData = () => {
   registerData.value.username = ''
   registerData.value.password = ''
   registerData.value.rePassword = ''
@@ -74,8 +76,7 @@ const clearRegisterData = () =>{
           <h1>注册</h1>
         </el-form-item>
         <el-form-item prop="username">
-          <el-input :prefix-icon="User" placeholder="请输入用户名"
-                    v-model="registerData.username"></el-input>
+          <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码"
@@ -92,7 +93,7 @@ const clearRegisterData = () =>{
           </el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = false;clearRegisterData()" >
+          <el-link type="info" :underline="false" @click="isRegister = false; clearRegisterData()">
             ← 返回
           </el-link>
         </el-form-item>
@@ -106,7 +107,8 @@ const clearRegisterData = () =>{
           <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
+          <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码"
+                    v-model="registerData.password"></el-input>
         </el-form-item>
         <el-form-item class="flex">
           <div class="flex">
@@ -116,10 +118,10 @@ const clearRegisterData = () =>{
         </el-form-item>
         <!-- 登录按钮 -->
         <el-form-item>
-          <el-button class="button" type="primary" auto-insert-space @click="login">登录</el-button>
+          <el-button class="button" type="primary" auto-insert-space @click="Login">登录</el-button>
         </el-form-item>
         <el-form-item class="flex">
-          <el-link type="info" :underline="false" @click="isRegister = true;clearRegisterData()">
+          <el-link type="info" :underline="false" @click="isRegister = true; clearRegisterData()">
             注册 →
           </el-link>
         </el-form-item>
