@@ -1,4 +1,4 @@
-# big-event
+# big-event-vue
 
 #### 介绍
 SpringBoot+Vue学习项目
