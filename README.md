@@ -1,29 +1,41 @@
-# big-event-vue
+# big-event
 
-This template should help get you started developing with Vue 3 in Vite.
+#### 介绍
+SpringBoot+Vue学习项目
 
-## Recommended IDE Setup
+#### 系统架构
+前后端分离,人不分离模式开发
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+#### 启动教程教程
 
-## Customize configuration
+1.  xxxx
+2.  xxxx
+3.  xxxx
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+#### 技术栈
 
-## Project Setup
 
-```sh
-npm install
-```
+| 前端技术栈        | 后端技术栈      | 数据库   | 
+|--------------|------------|-------|
+| Vue          | SpringBoot | Mysql |
+| Element-Plus | Mybatis    | Redis |
+| Axios        | Jwt        | xxxx  |
 
-### Compile and Hot-Reload for Development
 
-```sh
-npm run dev
-```
 
-### Compile and Minify for Production
+#### 参与贡献
 
-```sh
-npm run build
-```
+1.  Fork 本仓库
+2.  新建 Feat_xxx 分支
+3.  提交代码
+4.  新建 Pull Request
+
+
+#### 特技
+
+1. xxxx
+2. xxxx
+3. xxxx
+4. xxxx
+5. xxxx
+6. xxxx
