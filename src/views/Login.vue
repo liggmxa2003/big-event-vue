@@ -48,12 +48,15 @@ const register = async () => {
 }
 
 // 复用注册表单数据模型完成登录
+import {useTokenStore} from "@/stores/token.js";
 const router = useRouter()
-
+const tokenStore = useTokenStore();
 const Login = async () => {
   // 调用接口完成登录
   let result = await userLoginService(registerData.value);
   ElMessage.success(result.msg ? result.msg : '登录成功')
+  //把得到的token保存到pinia中
+  tokenStore.setToken(result.data)
   // 跳转主页
   router.push('/')
 }
