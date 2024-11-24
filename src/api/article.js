@@ -6,3 +6,8 @@ export const articleCategoryListService = ()=>{
     //return request.get('/category',{headers:{'Authorization':tokenStore.token}});
     return request.get('/category');
 }
+
+//添加文章分类
+export const addArticleCategoryAddService = (categoryData)=>{
+    return request.post('/category',categoryData);
+}

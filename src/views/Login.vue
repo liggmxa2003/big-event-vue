@@ -54,7 +54,7 @@ const tokenStore = useTokenStore();
 const Login = async () => {
   // 调用接口完成登录
   let result = await userLoginService(registerData.value);
-  ElMessage.success(result.msg ? result.msg : '登录成功')
+  ElMessage.success(result.message ? result.message : '登录成功')
   //把得到的token保存到pinia中
   tokenStore.setToken(result.data)
   // 跳转主页
