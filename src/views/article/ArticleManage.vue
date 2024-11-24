@@ -203,6 +203,24 @@ const deleteArticle = async (row) => {
     articleList()
   }
 }
+
+// 文件上传前的验证
+const handleBeforeUpload = (file) => {
+  const isImage = file.type.startsWith('image/');
+  const isLt10M = file.size / 1024 / 1024 < 10;
+
+  if (!isImage) {
+    ElMessage.error('上传文件只能是图片格式!');
+    return false;
+  }
+
+  if (!isLt10M) {
+    ElMessage.error('上传文件大小不能超过 10MB!');
+    return false;
+  }
+
+  return true;
+}
 </script>
 
 <template>
@@ -286,6 +304,8 @@ const deleteArticle = async (row) => {
           name="file"
           :headers="{'Authorization':tokenStore.token}"
           :on-success="uploadSuccess"
+          :before-upload="handleBeforeUpload"
+          :tip="'支持jpg、png格式，大小不超过10MB'"
           >
             <img v-if="articleModel.coverImg" :src="articleModel.coverImg" class="avatar"/>
             <el-icon v-else class="avatar-uploader-icon">
