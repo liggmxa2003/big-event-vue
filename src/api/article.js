@@ -17,3 +17,15 @@ export const deleteArticleCategoryService = (id)=>{
 export const articleListService = (params)=>{
     return request.get('/article',{params:params});
 }
+//添加文章
+export const addArticleService = (articleData)=>{
+    return request.post('/article',articleData);
+}
+//编辑文章
+export const editArticleService = (articleData)=>{
+    return request.put('/article',articleData);
+}
+//删除文章
+export const deleteArticleService = (id)=>{
+    return request.delete('/article?id='+id);
+}
