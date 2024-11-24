@@ -65,6 +65,17 @@ const addCategory = async () => {
   //刷新列表
   articleCategoryList()
 }
+//控制弹窗标题的展示
+const title = ref('')
+//展示编辑弹窗
+const showDialog = (row) => {
+  dialogVisible.value = true; title.value = '编辑分类'
+  //数据拷贝
+  categoryModel.value.categoryName = row.categoryName;
+  categoryModel.value.categoryAlias = row.categoryAlias;
+  //扩展id属性，转递给后台用于区分添加和编辑
+  categoryModel.value.id = row.id
+}
 </script>
 <template>
   <el-card class="page-container">
@@ -72,7 +83,7 @@ const addCategory = async () => {
       <div class="header">
         <span>文章分类</span>
         <div class="extra">
-          <el-button type="primary" @click="dialogVisible = true">添加分类</el-button>
+          <el-button type="primary" @click="dialogVisible = true;title='添加分类'">添加分类</el-button>
         </div>
       </div>
     </template>
@@ -82,7 +93,7 @@ const addCategory = async () => {
       <el-table-column label="分类别名" prop="categoryAlias"></el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
-          <el-button :icon="Edit" circle plain type="primary"></el-button>
+          <el-button :icon="Edit" circle plain type="primary" @click="showDialog(row)"></el-button>
           <el-button :icon="Delete" circle plain type="danger"></el-button>
         </template>
       </el-table-column>
@@ -92,7 +103,7 @@ const addCategory = async () => {
     </el-table>
 
     <!-- 添加分类弹窗 -->
-    <el-dialog v-model="dialogVisible" title="添加弹层" width="30%">
+    <el-dialog v-model="dialogVisible" :title="title" width="30%">
       <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px">
         <el-form-item label="分类名称" prop="categoryName">
           <el-input v-model="categoryModel.categoryName" minlength="1" maxlength="10"></el-input>
