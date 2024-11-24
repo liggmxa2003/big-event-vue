@@ -52,6 +52,16 @@ import {useTokenStore} from "@/stores/token.js";
 const router = useRouter()
 const tokenStore = useTokenStore();
 const Login = async () => {
+  //检查用户名和密码是否为空
+  if (registerData.value.username === '' || registerData.value.password === '') {
+    ElMessage.warning('用户名或密码不能为空')
+    return
+  }
+  //检查账号密码是否符合正则
+  if (!/^.{5,16}$/.test(registerData.value.password)) {
+    ElMessage.warning('密码长度在 5 到 16 个字符')
+    return
+  }
   // 调用接口完成登录
   let result = await userLoginService(registerData.value);
   ElMessage.success(result.message ? result.message : '登录成功')

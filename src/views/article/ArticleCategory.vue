@@ -29,8 +29,8 @@ const categorys = ref([
   }
 ])
 //声明一个异步的函数
-import {articleCategoryListService,addArticleCategoryAddService} from '@/api/article.js'
-import {ElMessage} from "element-plus";
+import {articleCategoryListService,addArticleCategoryAddService,deleteArticleCategoryService} from '@/api/article.js'
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const articleCategoryList = async () => {
   let result = await articleCategoryListService()
@@ -57,6 +57,16 @@ articleCategoryList()
 
 //调用添加分类接口
 const addCategory = async () => {
+  //判断提交数据是否为空
+  if (categoryModel.value.categoryName === '' || categoryModel.value.categoryAlias === '') {
+    ElMessage.warning('请输入分类名称和别名')
+    return
+  }else
+    //判断字符在2-10个字符之间
+  if (!/^.{2,10}$/.test(categoryModel.value.categoryName)) {
+    ElMessage.warning('分类名称要求2-10个字符之间')
+    return
+  }
   //调用接口
   let result = await addArticleCategoryAddService(categoryModel.value);
   ElMessage.success(result.msg ? result.msg : '添加成功')
@@ -76,6 +86,55 @@ const showDialog = (row) => {
   //扩展id属性，转递给后台用于区分添加和编辑
   categoryModel.value.id = row.id
 }
+//编辑分类
+const updateCategory = async () => {
+  //判断提交数据是否为空
+  if (categoryModel.value.categoryName === '' || categoryModel.value.categoryAlias === '') {
+    ElMessage.warning('请输入分类名称和别名')
+    return
+  }else
+  //判断字符在2-10个字符之间
+  if (!/^.{2,10}$/.test(categoryModel.value.categoryName)) {
+    ElMessage.warning('分类名称要求2-10个字符之间')
+    return
+  }
+  //调用接口
+  let result = await addArticleCategoryAddService(categoryModel.value);
+  ElMessage.success(result.msg ? result.msg : '编辑成功')
+  //关闭弹窗
+  dialogVisible.value = false
+  //刷新列表
+  articleCategoryList()
+}
+//删除分类
+const deleteCategory = (row) => {
+  //提示框
+  ElMessageBox.confirm(
+      '确定要删除这条分类吗?',
+      '提示',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+  )
+      .then(async () => {
+        //调用接口
+        let result = await deleteArticleCategoryService(row.id);
+        ElMessage({
+          type: 'success',
+          message: '成功删除',
+        })
+        //刷新列表
+        articleCategoryList()
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消删除',
+        })
+      })
+}
 </script>
 <template>
   <el-card class="page-container">
@@ -94,7 +153,7 @@ const showDialog = (row) => {
       <el-table-column label="操作" width="100">
         <template #default="{ row }">
           <el-button :icon="Edit" circle plain type="primary" @click="showDialog(row)"></el-button>
-          <el-button :icon="Delete" circle plain type="danger"></el-button>
+          <el-button :icon="Delete" circle plain type="danger" @click="deleteCategory(row)"></el-button>
         </template>
       </el-table-column>
       <template #empty>
@@ -115,7 +174,7 @@ const showDialog = (row) => {
       <template #footer>
         <span class="dialog-footer">
             <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="addCategory"> 确认 </el-button>
+            <el-button type="primary" @click="title == '添加分类' ? addCategory(): updateCategory()"> 确认 </el-button>
         </span>
       </template>
     </el-dialog>

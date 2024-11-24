@@ -11,3 +11,7 @@ export const articleCategoryListService = ()=>{
 export const addArticleCategoryAddService = (categoryData)=>{
     return request.post('/category',categoryData);
 }
+//删除文章分类
+export const deleteArticleCategoryService = (id)=>{
+    return request.delete('/category?id='+id);
+}
