@@ -348,7 +348,7 @@ const handleBeforeUpload = (file) => {
   :deep() {
     .avatar {
       width: 178px;
-      height: 178px;
+      height: 200px;
       display: block;
     }
 

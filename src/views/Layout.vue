@@ -100,7 +100,7 @@ import avatar from '@/assets/default.png'
 
     &__logo {
       height: 120px;
-      background: url('@/assets/logo.png') no-repeat center / 120px auto;
+      background: url('http://sngw3goey.hn-bkt.clouddn.com/LOGOpng.png') no-repeat center / 180px auto;
     }
 
     .el-menu {
