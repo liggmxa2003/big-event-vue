@@ -19,3 +19,7 @@ export const userLoginService = (loginData)=>{
     }
 	return request.post('user/login',params);
 }
+//获取用户信息接口
+export const userInfoService = ()=>{
+	return request.get('user/userInfo');
+}
