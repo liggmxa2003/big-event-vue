@@ -13,11 +13,9 @@ import UserResetPasswordVue from '@/views/user/UserResetPassword.vue'
 const routes = [{path: '/login', component: LoginVue}, {
     path: '/', component: LayoutVue, redirect: '/article/manage', children: [//子路由
         {path: '/article/category', component: ArticleCategoryVue}, {
-            path: '/article/manage',
-            component: ArticleManageVue
-        }, {path: '/user/avatar', component: UserAvatarVue}, {
-            path: '/user/info',
-            component: UserInfoVue
+            path: '/article/manage', component: ArticleManageVue}, {
+            path: '/user/avatar', component: UserAvatarVue}, {
+            path: '/user/info', component: UserInfoVue
         }, {path: '/user/resetPassword', component: UserResetPasswordVue}]
 }]
 //创建路由器
