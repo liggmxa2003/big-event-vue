@@ -23,3 +23,17 @@ export const userLoginService = (loginData)=>{
 export const userInfoService = ()=>{
 	return request.get('user/userInfo');
 }
+//修改用户信息接口
+export const userInUpdateService = (userInfoData)=>{
+    return request.put('user/update',userInfoData);
+}
+//头像修改
+export const userAvatarUpdateService = (avatarUrl)=>{
+    const params = new URLSearchParams()
+    params.append('avatarUrl',avatarUrl);
+    return request.patch('/user/updateAvatar',params);
+}
+//修改M密码
+export const updatePasswordService = (pwdData)=>{
+    return request.patch('/user/updatePwd',pwdData);
+}
